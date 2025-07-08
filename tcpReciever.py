@@ -40,7 +40,7 @@ def listener():
             split = data.split(b"####")
             new = extractPckNr(split[0].decode())
             data = split[1]
-            #print(new)
+            print(new)
             old = checkOrder(new, old)
 
 if __name__ == "__main__":
