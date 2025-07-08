@@ -34,13 +34,13 @@ def listener():
     new = 10000
     old = 10000
     while(True):
-        chunk = conn.recv(1518)
+        chunk = conn.recv(1465)
         data += chunk
         if(b"####" in data):
             split = data.split(b"####")
             new = extractPckNr(split[0].decode())
             data = split[1]
-            print(new)
+            #print(new)
             old = checkOrder(new, old)
 
 if __name__ == "__main__":
