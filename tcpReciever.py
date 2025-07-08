@@ -28,10 +28,12 @@ def checkOrder(new: int, prev: int):
     return new
 
 def listener():
+
+    conn, addr = sock.accept()
     new = 10000
     old = 10000
     while(True):
-        data = sock.recv(1518)
+        data = conn.recv(1518)
         new = extractPckNr(data.decode())
         #print(new)
         old = checkOrder(new, old)
