@@ -36,7 +36,34 @@ def streamData(frequency: int, duration: int, msg: str) -> int:
         pckCount  = pckCount + 1
         payload = str(10000 + pckCount) + ';' + msg + "####"
         sock.sendto(payload.encode(), (udp_ip, udp_port))
+        time.sleep(sleepTime)
+
+    timeTaken = round(time.time() - before, 2)
+    print(f"Sent {noOfPck} packages in {timeTaken} seconds")
+    return 0
+
+def streamDataCont(duration: int, msg: str) -> int:
+    '''
+    Stream data to reciever.
+    
+    :param int frequency: The number of times per second to send data
+    :param int duration: The duration over which to send data
+    :param string str: The message to be sent
+    :return int: Response code
+    '''
+    before = time.time()
+    pckCount = 0
+
+    print(f"Begin sending packages to {udp_ip}...")
+
+    noOfPck = 0
+
+    while(round(time.time() - before, 2) < duration):
+        pckCount  = pckCount + 1
+        payload = str(10000 + pckCount) + ';' + msg + "####"
+        sock.sendto(payload.encode(), (udp_ip, udp_port))
         time.sleep(0)
+        noOfPck = noOfPck + 1
 
     timeTaken = round(time.time() - before, 2)
     print(f"Sent {noOfPck} packages in {timeTaken} seconds")
@@ -47,4 +74,7 @@ if __name__ == "__main__":
     if(len(sys.argv) > 4):
         setupReciever(sys.argv[3], int(sys.argv[4]))
 
-    streamData(int(sys.argv[1]), int(sys.argv[2]), TEST_MSG)
+    if(int(sys.argv[1]) == 0):
+        streamDataCont(int(sys.argv[2]), TEST_MSG)
+    else:
+        streamData(int(sys.argv[1]), int(sys.argv[2]), TEST_MSG)
