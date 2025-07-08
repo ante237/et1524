@@ -33,10 +33,14 @@ def listener():
     new = 10000
     old = 10000
     while(True):
-        data = conn.recv(1518)
-        new = extractPckNr(data.decode())
-        #print(new)
-        old = checkOrder(new, old)
+        chunk = conn.recv(1518)
+        data += chunk
+        if(b"####" in data):
+            split = data.split(b"####")
+            new = extractPckNr(split[0].decode())
+            data = split[1]
+            #print(new)
+            old = checkOrder(new, old)
 
 if __name__ == "__main__":
     setupSock(sys.argv[1], int(sys.argv[2]))

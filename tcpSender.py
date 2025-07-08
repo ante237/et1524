@@ -59,17 +59,14 @@ def streamDataCont(duration: int, msg: str) -> int:
 
     print(f"Begin sending packages to {tcp_ip}...")
 
-    noOfPck = 0
-
     while(round(time.time() - before, 2) < duration):
-        pckCount  = pckCount + 1
+        pckCount += 1
         payload = str(10000 + pckCount) + ';' + msg + "####"
         sock.send(payload.encode())
         # time.sleep(0)
-        noOfPck = noOfPck + 1
 
     timeTaken = round(time.time() - before, 2)
-    print(f"Sent {noOfPck} packages in {timeTaken} seconds")
+    print(f"Sent {pckCount} packages in {timeTaken} seconds")
     return 0
 
 if __name__ == "__main__":
