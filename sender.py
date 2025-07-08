@@ -41,7 +41,7 @@ def streamData(frequency: int, duration: int, msg: str) -> int:
 
 if __name__ == "__main__":
     print(sys.argv)
-    if(len(sys.argv) > 2):
-        setupReciever(sys.argv[1], int(sys.argv[2]))
+    if(len(sys.argv) > 4):
+        setupReciever(sys.argv[3], int(sys.argv[4]))
 
-    streamData(10, 20, TEST_MSG)
+    streamData(int(sys.argv[1]), int(sys.argv[2]), TEST_MSG)
