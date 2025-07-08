@@ -30,6 +30,7 @@ def checkOrder(new: int, prev: int):
 def listener():
 
     conn, addr = sock.accept()
+    data = b""
     new = 10000
     old = 10000
     while(True):
