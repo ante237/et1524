@@ -25,7 +25,7 @@ def streamData(frequency: int, duration: int, msg: str) -> int:
     :return int: Response code
     '''
     before = time.time()
-    sleepTime = 1 / frequency + 1
+    sleepTime = 1 / (frequency + 1)
     pckCount = 0
 
     print(f"Begin sending packages to {udp_ip}...")
