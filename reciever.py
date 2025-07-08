@@ -37,4 +37,5 @@ def listener():
 
 if __name__ == "__main__":
     setupSock(sys.argv[1], int(sys.argv[2]))
+    print("Begin listening")
     listener()
