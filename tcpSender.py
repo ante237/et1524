@@ -1,20 +1,20 @@
 import socket
-import sys
 import time
+import sys
 
-udp_ip = "127.0.0.1"
-udp_port = 5005
+tcp_ip = "127.0.0.1"
+tcp_port = 5005
 TEST_MSG  = 'A'*1465
 TIMER_OFFSET = 0
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 def setupReciever(ip = "127.0.0.1", port = 5005):
     print("Set up reciever")
-    global udp_ip
-    global udp_port
-    udp_ip = ip
-    udp_port = port
+    global tcp_ip
+    global tcp_port
+    tcp_ip = ip
+    tcp_port = port
 
 def streamData(frequency: int, duration: int, msg: str) -> int:
     '''
@@ -26,19 +26,21 @@ def streamData(frequency: int, duration: int, msg: str) -> int:
     :return int: Response code
     '''
     before = time.time()
+    sock.connect((tcp_ip, tcp_port))
     sleepTime = 1 / (frequency + TIMER_OFFSET)
     pckCount = 0
 
-    print(f"Begin sending packages to {udp_ip}...")
+    print(f"Begin sending packages to {tcp_ip}...")
 
     noOfPck = duration * frequency
 
     for i in range(noOfPck):
         pckCount  = pckCount + 1
         payload = str(10000 + pckCount) + ';' + msg + "####"
-        sock.sendto(payload.encode(), (udp_ip, udp_port))
+        sock.send(payload.encode())
         time.sleep(sleepTime)
 
+    sock.close()
     timeTaken = round(time.time() - before, 2)
     print(f"Sent {noOfPck} packages in {timeTaken} seconds")
     return 0
@@ -52,18 +54,22 @@ def streamDataCont(duration: int, msg: str) -> int:
     :return int: Response code
     '''
     before = time.time()
+    sock.connect((tcp_ip, tcp_port))
     pckCount = 0
 
-    print(f"Begin sending packages to {udp_ip}...")
+    print(f"Begin sending packages to {tcp_ip}...")
+
+    noOfPck = 0
 
     while(round(time.time() - before, 2) < duration):
         pckCount  = pckCount + 1
         payload = str(10000 + pckCount) + ';' + msg + "####"
-        sock.sendto(payload.encode(), (udp_ip, udp_port))
+        sock.send(payload.encode())
         # time.sleep(0)
+        noOfPck = noOfPck + 1
 
     timeTaken = round(time.time() - before, 2)
-    print(f"Sent {pckCount} packages in {timeTaken} seconds")
+    print(f"Sent {noOfPck} packages in {timeTaken} seconds")
     return 0
 
 if __name__ == "__main__":
