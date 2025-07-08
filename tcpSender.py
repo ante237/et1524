@@ -5,7 +5,7 @@ import sys
 tcp_ip = "127.0.0.1"
 tcp_port = 5005
 TEST_MSG  = 'A'*1465
-TIMER_OFFSET = 0
+TIMER_OFFSET = 1.5
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
