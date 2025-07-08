@@ -32,7 +32,7 @@ def listener():
     while(True):
         data, addr = sock.recvfrom(1518)
         new = extractPckNr(data.decode())
-        print(new)
+        #print(new)
         old = checkOrder(new, old)
 
 if __name__ == "__main__":
