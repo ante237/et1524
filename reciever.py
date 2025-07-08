@@ -23,7 +23,7 @@ def extractPckNr(payload: str):
 
 def checkOrder(new: int, prev: int):
     if(new - 1 != prev):
-        print(f"{bcolors.FAIL} Wrong order: {new} after {prev}, expected {prev + 1}. {bcolors.ENDC}")
+        print(f"{bcolors.FAIL} Wrong order: {new} after {prev}. {bcolors.ENDC}")
     return new
 
 def listener():
