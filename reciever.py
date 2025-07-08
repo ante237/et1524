@@ -18,7 +18,8 @@ def setupSock(ip: str, port: int):
     sock.bind((ip, port))
 
 def extractPckNr(payload: str):
-    return int(payload.split(';', 1)[0])
+    split = payload.split(';', 1)
+    return int(split[0])
 
 def checkOrder(new: int, prev: int):
     if(new - 1 != prev):
@@ -30,8 +31,7 @@ def listener():
     old = 10000
     while(True):
         data, addr = sock.recvfrom(1518)
-        data.decode()
-        new = extractPckNr(data)
+        new = extractPckNr(data.decode())
         print(new)
         old = checkOrder(new, old)
 
