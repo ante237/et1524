@@ -36,7 +36,7 @@ def streamData(frequency: int, duration: int, msg: str) -> int:
         pckCount  = pckCount + 1
         payload = str(10000 + pckCount) + ';' + msg + "####"
         sock.sendto(payload.encode(), (udp_ip, udp_port))
-        time.sleep(sleepTime)
+        time.sleep(0)
 
     timeTaken = round(time.time() - before, 2)
     print(f"Sent {noOfPck} packages in {timeTaken} seconds")
