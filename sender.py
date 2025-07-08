@@ -62,7 +62,7 @@ def streamDataCont(duration: int, msg: str) -> int:
         pckCount  = pckCount + 1
         payload = str(10000 + pckCount) + ';' + msg + "####"
         sock.sendto(payload.encode(), (udp_ip, udp_port))
-        time.sleep(0)
+        # time.sleep(0)
         noOfPck = noOfPck + 1
 
     timeTaken = round(time.time() - before, 2)
