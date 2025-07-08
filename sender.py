@@ -30,13 +30,16 @@ def streamData(frequency: int, duration: int, msg: str) -> int:
 
     print(f"Begin sending packages to {udp_ip}...")
 
-    for i in range(duration*frequency):
+    noOfPck = duration * frequency
+
+    for i in range(noOfPck):
         pckCount  = pckCount + 1
         payload = str(10000 + pckCount) + ';' + msg + "####"
         sock.sendto(payload.encode(), (udp_ip, udp_port))
         time.sleep(sleepTime)
 
-    print(f"Sent {frequency * duration} packages in {round(time.time() - before, 2)} seconds")
+    timeTaken = round(time.time() - before, 2)
+    print(f"Sent {noOfPck} packages in {timeTaken} seconds")
     return 0
 
 if __name__ == "__main__":
